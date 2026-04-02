@@ -14,7 +14,7 @@ import java.util.logging.Filter;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/products"
+@RequestMapping("/products")
 public class ProductController {
 
     private final ProductRepository productRepository;
