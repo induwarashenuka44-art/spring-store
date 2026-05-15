@@ -23,9 +23,13 @@ public class Cart {
     @Column(name = "data_created", insertable = false, updatable = false)
     private LocalDate dataCreated;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<CartItem> items = new LinkedHashSet<>();
 
-    public BigDecimal getTotalPrice
+    public BigDecimal getTotalPrice() {
+        return items.stream()
+                .map(CartItem::getTotalPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
 
 }
