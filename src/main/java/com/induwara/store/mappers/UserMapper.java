@@ -1,9 +1,9 @@
 package com.induwara.store.mappers;
 
-import com.codewithmosh.store.dtos.RegisterUserRequest;
-import com.codewithmosh.store.dtos.UpdateUserRequest;
-import com.codewithmosh.store.dtos.UserDto;
-import com.codewithmosh.store.entities.User;
+import com.induwara.store.dtos.RegisterUserRequest;
+import com.induwara.store.dtos.UpdateUserRequest;
+import com.induwara.store.dtos.UserDto;
+import com.induwara.store.entities.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 

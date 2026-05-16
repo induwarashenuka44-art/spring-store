@@ -1,6 +1,6 @@
 package com.induwara.store.controllers;
 
-import com.codewithmosh.store.entities.Message;
+import com.induwara.store.entities.Message;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController

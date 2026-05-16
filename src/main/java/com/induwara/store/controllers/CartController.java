@@ -1,14 +1,14 @@
 package com.induwara.store.controllers;
 
-import com.codewithmosh.store.dtos.AddItemToCartRequest;
-import com.codewithmosh.store.dtos.CartDto;
-import com.codewithmosh.store.dtos.CartItemDto;
-import com.codewithmosh.store.dtos.UpdateCartItemRequest;
-import com.codewithmosh.store.entities.Cart;
-import com.codewithmosh.store.entities.CartItem;
-import com.codewithmosh.store.mappers.CartMapper;
-import com.codewithmosh.store.repositories.CartRepository;
-import com.codewithmosh.store.repositories.ProductRepository;
+import com.induwara.store.dtos.AddItemToCartRequest;
+import com.induwara.store.dtos.CartDto;
+import com.induwara.store.dtos.CartItemDto;
+import com.induwara.store.dtos.UpdateCartItemRequest;
+import com.induwara.store.entities.Cart;
+import com.induwara.store.entities.CartItem;
+import com.induwara.store.mappers.CartMapper;
+import com.induwara.store.repositories.CartRepository;
+import com.induwara.store.repositories.ProductRepository;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

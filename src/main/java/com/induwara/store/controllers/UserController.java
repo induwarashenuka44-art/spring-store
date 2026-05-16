@@ -1,12 +1,12 @@
 package com.induwara.store.controllers;
 
-import com.codewithmosh.store.dtos.ChangePasswordRequest;
-import com.codewithmosh.store.dtos.RegisterUserRequest;
-import com.codewithmosh.store.dtos.UpdateUserRequest;
-import com.codewithmosh.store.dtos.UserDto;
-import com.codewithmosh.store.entities.User;
-import com.codewithmosh.store.mappers.UserMapper;
-import com.codewithmosh.store.repositories.UserRepository;
+import com.induwara.store.dtos.ChangePasswordRequest;
+import com.induwara.store.dtos.RegisterUserRequest;
+import com.induwara.store.dtos.UpdateUserRequest;
+import com.induwara.store.dtos.UserDto;
+import com.induwara.store.entities.User;
+import com.induwara.store.mappers.UserMapper;
+import com.induwara.store.repositories.UserRepository;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;

@@ -1,9 +1,9 @@
 package com.induwara.store.mappers;
 
-import com.codewithmosh.store.dtos.CartDto;
-import com.codewithmosh.store.dtos.CartItemDto;
-import com.codewithmosh.store.entities.Cart;
-import com.codewithmosh.store.entities.CartItem;
+import com.induwara.store.dtos.CartDto;
+import com.induwara.store.dtos.CartItemDto;
+import com.induwara.store.entities.Cart;
+import com.induwara.store.entities.CartItem;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

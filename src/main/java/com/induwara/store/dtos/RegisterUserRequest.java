@@ -1,6 +1,6 @@
 package com.induwara.store.dtos;
 
-import com.codewithmosh.store.validations.Lowercase;
+import com.induwara.store.validations.Lowercase;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

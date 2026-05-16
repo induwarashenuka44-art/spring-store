@@ -1,6 +1,6 @@
 package com.induwara.store.repositories;
 
-import com.codewithmosh.store.entities.Cart;
+import com.induwara.store.entities.Cart;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
