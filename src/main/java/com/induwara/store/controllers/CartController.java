@@ -7,6 +7,7 @@ import com.induwara.store.dtos.UpdateCartItemRequest;
 import com.induwara.store.exceptions.CartNotFoundException;
 import com.induwara.store.exceptions.ProductNotFoundException;
 import com.induwara.store.services.CartService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/carts")
+@Tag(name = "Cart")
 public class CartController  {
     private final CartService cartService;
 
