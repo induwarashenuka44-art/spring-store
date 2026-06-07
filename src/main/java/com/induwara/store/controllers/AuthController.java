@@ -1,6 +1,8 @@
 package com.induwara.store.controllers;
 
+import com.induwara.store.dtos.JwtResponse;
 import com.induwara.store.dtos.LoginUserRequest;
+import com.induwara.store.services.JwtService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,10 +19,10 @@ import java.util.Map;
 @RequestMapping("/auth")
 public class  AuthController {
     private final AuthenticationManager authenticationManager;
-
+    private final JwtService jwtService;
 
     @PostMapping("/login")
-    public ResponseEntity<Void> loginUser(
+    public ResponseEntity<JwtResponse > loginUser(
             @Valid @RequestBody LoginUserRequest request
     ){
          authenticationManager.authenticate(
@@ -29,7 +31,18 @@ public class  AuthController {
                          request.getPassword()
                  )
          );
-        return ResponseEntity.ok().build();
+
+         var token = jwtService.generate(request.getEmail());
+         return ResponseEntity.ok(new JwtResponse(token));
+    }
+
+    @PostMapping("/validate")
+    public boolean validate(@RequestHeader("Authorization") String authHeader){
+        System.out.println("Validate Called");
+
+        var token = authHeader.replace("Bearer ", "");
+
+        return jwtService.validateToken(token);
     }
 
     @ExceptionHandler(BadCredentialsException.class)
