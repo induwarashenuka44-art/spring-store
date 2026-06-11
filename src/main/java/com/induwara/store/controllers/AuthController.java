@@ -2,6 +2,9 @@ package com.induwara.store.controllers;
 
 import com.induwara.store.dtos.JwtResponse;
 import com.induwara.store.dtos.LoginUserRequest;
+import com.induwara.store.dtos.UserDto;
+import com.induwara.store.mappers.UserMapper;
+import com.induwara.store.repositories.UserRepository;
 import com.induwara.store.services.JwtService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -10,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -20,6 +24,8 @@ import java.util.Map;
 public class  AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     @PostMapping("/login")
     public ResponseEntity<JwtResponse > loginUser(
@@ -32,7 +38,8 @@ public class  AuthController {
                  )
          );
 
-         var token = jwtService.generate(request.getEmail());
+         var user = userRepository.findByEmail(request.getEmail()).orElseThrow();
+         var token = jwtService.generate(user);
          return ResponseEntity.ok(new JwtResponse(token));
     }
 
@@ -44,6 +51,24 @@ public class  AuthController {
 
         return jwtService.validateToken(token);
     }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserDto> me(@RequestHeader("Authorization") String authHeader){
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("Authentication " + authentication);
+        var userId  = (Long) authentication.getPrincipal();
+
+        var user = userRepository.findById(userId).orElse(null);
+
+        if(user ==  null){
+            return ResponseEntity.notFound().build();
+        }
+
+        var userDto = userMapper.toDto(user);
+        return ResponseEntity.ok(userDto);
+    }
+
+
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<Map<String,String>> handleBadCredentialsException(){

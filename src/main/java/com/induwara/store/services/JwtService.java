@@ -1,5 +1,6 @@
 package com.induwara.store.services;
 
+import com.induwara.store.entities.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -14,12 +15,14 @@ public class JwtService {
     @Value("${spring.jwt.secret}")
     private String secret;
 
-    public String generate(String email){
+    public String generate(User user){
         final long tokenExpiration = 86400; //1day
 
         return Jwts.builder()
-                .subject(email)
+                .subject(user.getId().toString())
                 .issuedAt(new Date())
+                .claim("email", user.getEmail())
+                .claim("name", user.getName())
                 .expiration(new Date(System.currentTimeMillis() + 1000 * tokenExpiration))
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes()))
                 .compact();
@@ -46,6 +49,14 @@ public class JwtService {
     }
 
     public String getEmailFromToken(String token){
-         return getClaims(token).getSubject();
+         return getClaims(token).get("email", String.class);
+    }
+
+    public Long getUserIdFromToken(String token){
+         return Long.valueOf(getClaims(token).getSubject());
+    }
+
+    public String getNameFromToken(String token){
+         return getClaims(token).get("name", String.class);
     }
 }
