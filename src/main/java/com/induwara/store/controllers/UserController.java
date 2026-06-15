@@ -4,7 +4,7 @@ import com.induwara.store.dtos.ChangePasswordRequest;
 import com.induwara.store.dtos.RegisterUserRequest;
 import com.induwara.store.dtos.UpdateUserRequest;
 import com.induwara.store.dtos.UserDto;
-import com.induwara.store.entities.User;
+import com.induwara.store.entities.Role;
 import com.induwara.store.mappers.UserMapper;
 import com.induwara.store.repositories.UserRepository;
 import jakarta.validation.Valid;
@@ -67,6 +67,7 @@ public class UserController {
 
         var user = userMapper.toEntity(request);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(Role.USER);
         userRepository.save(user);
 
         var userDto = userMapper.toDto(user);

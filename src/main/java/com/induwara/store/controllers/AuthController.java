@@ -1,11 +1,14 @@
 package com.induwara.store.controllers;
 
+import com.induwara.store.config.JwtConfig;
 import com.induwara.store.dtos.JwtResponse;
 import com.induwara.store.dtos.LoginUserRequest;
 import com.induwara.store.dtos.UserDto;
 import com.induwara.store.mappers.UserMapper;
 import com.induwara.store.repositories.UserRepository;
 import com.induwara.store.services.JwtService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,10 +29,12 @@ public class  AuthController {
     private final JwtService jwtService;
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final JwtConfig jwtConfig;
 
     @PostMapping("/login")
     public ResponseEntity<JwtResponse > loginUser(
-            @Valid @RequestBody LoginUserRequest request
+            @Valid @RequestBody LoginUserRequest request,
+            HttpServletResponse response
     ){
          authenticationManager.authenticate(
                  new UsernamePasswordAuthenticationToken(
@@ -39,23 +44,39 @@ public class  AuthController {
          );
 
          var user = userRepository.findByEmail(request.getEmail()).orElseThrow();
-         var token = jwtService.generate(user);
-         return ResponseEntity.ok(new JwtResponse(token));
+         var accessToken = jwtService.generateAccessToken(user);
+         var refreshToken = jwtService.generateRefreshToken(user);
+
+         var cookie =  new Cookie("refreshToken", refreshToken.toString());
+         cookie.setHttpOnly(true);
+         cookie.setPath("/");
+         cookie.setMaxAge(jwtConfig.getRefreshTokenExpiration()); // 7d
+         cookie.setSecure(false);
+         response.addCookie(cookie);
+
+         return ResponseEntity.ok(new JwtResponse(accessToken.toString()));
     }
 
-    @PostMapping("/validate")
-    public boolean validate(@RequestHeader("Authorization") String authHeader){
-        System.out.println("Validate Called");
+    @PostMapping("/refresh")
+    public ResponseEntity<JwtResponse> refresh(
+            @CookieValue(value = "refreshToken")  String refreshToken
+    ){
+        var jwt = jwtService.parseToken(refreshToken);
+        if(jwt == null || jwt.isExpired()){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
 
-        var token = authHeader.replace("Bearer ", "");
+        var user = userRepository.findById(jwt.getUserId()).orElseThrow();
+        var accessToken = jwtService.generateAccessToken(user).toString();
 
-        return jwtService.validateToken(token);
+        return ResponseEntity.ok(new JwtResponse(accessToken));
+
     }
+
 
     @GetMapping("/me")
     public ResponseEntity<UserDto> me(@RequestHeader("Authorization") String authHeader){
         var authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("Authentication " + authentication);
         var userId  = (Long) authentication.getPrincipal();
 
         var user = userRepository.findById(userId).orElse(null);
