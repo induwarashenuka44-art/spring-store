@@ -38,9 +38,9 @@ public class User {
     @Builder.Default
     private List<Address> addresses = new ArrayList<>();
 
-    @OneToMany(mappedBy = "customer", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
-    @Builder.Default
-    private List<Order> orders = new ArrayList<>();
+//    @OneToMany(mappedBy = "customer", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+//    @Builder.Default
+//    private List<Order> orders = new ArrayList<>();
 
     public void addAddress(Address address) {
         addresses.add(address);
