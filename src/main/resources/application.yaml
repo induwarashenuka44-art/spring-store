@@ -13,5 +13,5 @@ spring:
   jwt:
     # HS256 needs a key with enough entropy (jjwt expects >= 256 bits). Set JWT_SECRET in .env or the environment for real use.
     secret: ${JWT_SECRET:local-dev-only-32char-secret-key!!}
-    accessTokenExpiration: 900 # 15m
+    accessTokenExpiration: 7200 # 15m
     refreshTokenExpiration: 604800 # 7d
