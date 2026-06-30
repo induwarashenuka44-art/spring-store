@@ -15,3 +15,6 @@ spring:
     secret: ${JWT_SECRET:local-dev-only-32char-secret-key!!}
     accessTokenExpiration: 7200 # 15m
     refreshTokenExpiration: 604800 # 7d
+stripe:
+  secretKey: ${STRIPE_SECRET_KEY}
+websiteUrl: http://localhost:4242

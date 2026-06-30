@@ -1,7 +1,12 @@
 package com.induwara.store.dtos;
 
-public class ErrorDto {
-    public ErrorDto(String message) {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-    }
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ErrorDto {
+    private String message;
 }

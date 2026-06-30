@@ -1,11 +1,11 @@
 package com.induwara.store.controllers;
 
 import com.induwara.store.dtos.CheckoutRequest;
-import com.induwara.store.dtos.CheckoutResponse;
 import com.induwara.store.dtos.ErrorDto;
 import com.induwara.store.exceptions.CartEmptyException;
 import com.induwara.store.exceptions.CartNotFoundException;
 import com.induwara.store.services.CheckoutService;
+import com.stripe.exception.StripeException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,8 +19,13 @@ public class CheckoutController {
     private final CheckoutService  checkoutService;
 
     @PostMapping
-    public CheckoutResponse checkout(@Valid @RequestBody CheckoutRequest request){
-        return checkoutService.checkoutResponse(request);
+    public ResponseEntity<?> checkout(@Valid @RequestBody CheckoutRequest request){
+        try {
+            return ResponseEntity.ok(checkoutService.checkoutResponse(request));
+        } catch (StripeException ex){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ErrorDto("Error creating a checkout session"));
+        }
     }
 
     @ExceptionHandler({CartNotFoundException.class, CartEmptyException.class})

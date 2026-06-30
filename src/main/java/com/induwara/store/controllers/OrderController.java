@@ -1,11 +1,14 @@
 package com.induwara.store.controllers;
 
+import com.induwara.store.dtos.ErrorDto;
 import com.induwara.store.dtos.OrderDto;
+import com.induwara.store.exceptions.OrderNotFoundException;
 import com.induwara.store.services.OrderService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,5 +21,22 @@ public class OrderController {
     @GetMapping
     public List<OrderDto> getAllOrders(){
          return orderService.getAllOrders();
+    }
+
+    @GetMapping("/{orderId}")
+    public OrderDto getSingleOrder(@PathVariable("orderId") Long orderId){
+         return orderService.getSingleOrder(orderId);
+    }
+
+    @ExceptionHandler(OrderNotFoundException.class)
+    public ResponseEntity<Void> handleOrderNotFound(){
+        return ResponseEntity.notFound().build();
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorDto> handleAccessDenied(Exception ex){
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body(new ErrorDto(ex.getMessage()));
     }
 }
