@@ -1,4 +1,4 @@
-package com.induwara.store.services;
+package com.induwara.store.payments;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

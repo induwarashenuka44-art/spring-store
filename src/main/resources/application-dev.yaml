@@ -1,0 +1,10 @@
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    url: jdbc:mysql://localhost:3306/store_api?createDatabaseIfNotExist=true
+    username: root
+    password: Test1234
+  jpa:
+    show-sql: true
+websiteUrl: http://localhost:4242

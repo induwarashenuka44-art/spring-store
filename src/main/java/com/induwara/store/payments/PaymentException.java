@@ -1,4 +1,4 @@
-package com.induwara.store.exceptions;
+package com.induwara.store.payments;
 
 import lombok.NoArgsConstructor;
 

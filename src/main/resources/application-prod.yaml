@@ -1,0 +1,6 @@
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+websiteUrl: https://mystore.com

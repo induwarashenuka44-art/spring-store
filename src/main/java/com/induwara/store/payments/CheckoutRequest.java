@@ -1,4 +1,4 @@
-package com.induwara.store.dtos;
+package com.induwara.store.payments;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

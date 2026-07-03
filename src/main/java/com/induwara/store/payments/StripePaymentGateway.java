@@ -1,9 +1,8 @@
-package com.induwara.store.services;
+package com.induwara.store.payments;
 
 import com.induwara.store.entities.Order;
 import com.induwara.store.entities.OrderItem;
 import com.induwara.store.entities.PaymentStatus;
-import com.induwara.store.exceptions.PaymentException;
 import com.stripe.exception.EventDataObjectDeserializationException;
 import com.stripe.exception.SignatureVerificationException;
 import com.stripe.exception.StripeException;

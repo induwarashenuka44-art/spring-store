@@ -1,4 +1,4 @@
-package com.induwara.store.config;
+package com.induwara.store.payments;
 
 import com.stripe.Stripe;
 import jakarta.annotation.PostConstruct;
