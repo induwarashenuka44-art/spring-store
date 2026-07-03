@@ -21,6 +21,7 @@ public class CheckoutService {
     private final AuthService authService;
     private final PaymentGateway paymentGateway;
 
+
     @Transactional
     public CheckoutResponse checkoutResponse(CheckoutRequest request) throws PaymentException {
         var cart = cartRepository.getCartWithItems(request.getCartId()).orElse(null);
@@ -47,4 +48,18 @@ public class CheckoutService {
         }
 
     }
+
+    public void handleWebhook(WebhookRequest request){
+        System.out.println("request"+ request);
+
+        var result = paymentGateway.parseWebhookRequest(request);
+        System.out.println("result ==="+ result);
+        paymentGateway.parseWebhookRequest(request).ifPresent(paymentResult -> {
+            System.out.println("payment result" + paymentResult.getOrderId());
+            var order = orderRepository.findById(paymentResult.getOrderId()).orElseThrow();
+            System.out.println("order --- "+order);
+            order.setStatus(paymentResult.getPaymentStatus());
+            orderRepository.save(order);
+        });
+     }
 }
