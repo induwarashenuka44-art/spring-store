@@ -1,8 +1,8 @@
 package com.induwara.store.payments;
 
-import com.induwara.store.dtos.ErrorDto;
-import com.induwara.store.exceptions.CartEmptyException;
-import com.induwara.store.exceptions.CartNotFoundException;
+import com.induwara.store.common.ErrorDto;
+import com.induwara.store.carts.CartEmptyException;
+import com.induwara.store.carts.CartNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

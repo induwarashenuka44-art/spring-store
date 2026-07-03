@@ -1,7 +1,0 @@
-package com.induwara.store.repositories;
-
-import com.induwara.store.entities.Category;
-import org.springframework.data.repository.CrudRepository;
-
-public interface CategoryRepository extends CrudRepository<Category, Byte> {
-}

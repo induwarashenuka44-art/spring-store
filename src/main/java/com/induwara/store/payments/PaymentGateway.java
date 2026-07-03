@@ -1,6 +1,6 @@
 package com.induwara.store.payments;
 
-import com.induwara.store.entities.Order;
+import com.induwara.store.orders.Order;
 
 import java.util.Optional;
 

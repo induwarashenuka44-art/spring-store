@@ -1,12 +1,12 @@
 package com.induwara.store.payments;
 
-import com.induwara.store.entities.Order;
-import com.induwara.store.exceptions.CartEmptyException;
-import com.induwara.store.exceptions.CartNotFoundException;
-import com.induwara.store.repositories.CartRepository;
-import com.induwara.store.repositories.OrderRepository;
-import com.induwara.store.services.AuthService;
-import com.induwara.store.services.CartService;
+import com.induwara.store.orders.Order;
+import com.induwara.store.carts.CartEmptyException;
+import com.induwara.store.carts.CartNotFoundException;
+import com.induwara.store.carts.CartRepository;
+import com.induwara.store.orders.OrderRepository;
+import com.induwara.store.auth.AuthService;
+import com.induwara.store.carts.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

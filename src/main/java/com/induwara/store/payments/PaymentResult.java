@@ -1,6 +1,6 @@
 package com.induwara.store.payments;
 
-import com.induwara.store.entities.PaymentStatus;
+import com.induwara.store.carts.PaymentStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

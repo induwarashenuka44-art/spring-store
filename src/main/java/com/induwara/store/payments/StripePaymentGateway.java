@@ -1,8 +1,8 @@
 package com.induwara.store.payments;
 
-import com.induwara.store.entities.Order;
-import com.induwara.store.entities.OrderItem;
-import com.induwara.store.entities.PaymentStatus;
+import com.induwara.store.orders.Order;
+import com.induwara.store.orders.OrderItem;
+import com.induwara.store.carts.PaymentStatus;
 import com.stripe.exception.EventDataObjectDeserializationException;
 import com.stripe.exception.SignatureVerificationException;
 import com.stripe.exception.StripeException;
@@ -34,7 +34,8 @@ public class StripePaymentGateway implements PaymentGateway{
                     .setMode(SessionCreateParams.Mode.PAYMENT)
                     .setSuccessUrl(websiteUrl + "/checkout-success?orderId=" + order.getId())
                     .setCancelUrl(websiteUrl + "/checkout-cancel")
-                    .putMetadata("order_id", order.getId().toString());
+                    .setPaymentIntentData(createPaymentIntent(order)
+                    );
 
             order.getItems().forEach(item -> {
                 var lineitem = createLineItem(item);
@@ -47,6 +48,12 @@ public class StripePaymentGateway implements PaymentGateway{
         } catch (StripeException ex) {
             throw new PaymentException();
         }
+    }
+
+    private static SessionCreateParams.PaymentIntentData createPaymentIntent(Order order) {
+        return SessionCreateParams.PaymentIntentData.builder()
+                .putMetadata("order_id", order.getId().toString())
+                .build();
     }
 
     @Override
